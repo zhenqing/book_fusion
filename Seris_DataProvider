@@ -1,0 +1,106 @@
+<?php
+// Set the content type in the header to text/xml.
+header('Content-type: text/xml');
+
+// Include DBConn.php
+include('Includes/Connection_inc.php');
+
+// Use the connectToDB() function provided in DBConn.php, and establish the connection between PHP and the World database in our MySQL setup.
+$link = connectToDB();
+//echo $isbn;
+// Form the SQL query which will return the Top 10 Most Populous Countries.
+$strQuery = "select time,aprice,tnlprice,tulprice from pricehistory
+		where isbn = ".$_GET['isbn'];
+
+// Execute the query, or else return the error message.
+$result = mysql_query($strQuery) or die(mysql_error());
+
+
+if ($result) {
+	
+	// Create the chart's XML string. We can add attributes here to customize our chart.
+	$strXML = "<chart caption='Top 10 Most Populous Countries' showValues='0' useRoundEdges='1' palette='3'>";
+	
+	while($ors = mysql_fetch_array($result)) {
+		// Append the names of the countries and their respective populations to the chart's XML string.
+		$strXML .= "<set label='".$ors['time']."' value='".$ors['tnlprice']."' />";
+	}
+}   
+// Close the chart's XML string.
+$strXML .= "</chart>";	
+
+// Return the valid XML string.
+echo $strXML;
+
+<chart caption="Product-wise Sales" xaxisname="Day" canvasbgcolor="E7D9E6" canvasbordercolor="B38CB0" canvasborderthickness="1" basefontcolor="B38CB0" numberprefix="$" decimals="0" decimalseparator="," rotatelabels="1" slantlabels="1" tooltipbordercolor="FFFFFF" showvalues="0" legendbordercolor="B38CB0" >
+<categories>
+<category label="Jan" />
+<category label="Feb" />
+<category label="Mar" />
+<category label="Apr" />
+<category label="May" />
+<category label="Jun" />
+<category label="Jul" />
+<category label="Aug" />
+<category label="Sep" />
+<category label="Oct" />
+<category label="Nov" />
+<category label="Dec" />
+</categories>
+<dataset seriesname="Product A">
+<set value="27400" />
+<set value="9800" />
+<set value="25800" />
+<set value="26800" />
+<set value="29600" />
+<set value="2600" />
+<set value="31800" />
+<set value="36700" />
+<set value="9700" />
+<set value="31900" />
+<set value="34800" />
+<set value="24800" />
+</dataset>
+<dataset seriesname="Product B">
+<set value="10000" />
+<set value="1500" />
+<set value="9500" />
+<set value="15000" />
+<set value="11000" />
+<set value="9800" />
+<set value="1800" />
+<set value="700" />
+<set value="21700" />
+<set value="1900" />
+<set value="22900" />
+<set value="900" />
+</dataset>
+<dataset seriesname="Product C">
+<set value="800" />
+<set value="2500" />
+<set value="12500" />
+<set value="6800" />
+<set value="11000" />
+<set value="15000" />
+<set value="2800" />
+<set value="19700" />
+<set value="11700" />
+<set value="9800" />
+<set value="22900" />
+<set value="1000" />
+</dataset>
+<dataset seriesname="Product D">
+<set value="2000" />
+<set value="9500" />
+<set value="12500" />
+<set value="5800" />
+<set value="11000" />
+<set value="5000" />
+<set value="800" />
+<set value="19700" />
+<set value="5700" />
+<set value="800" />
+<set value="12900" />
+<set value="3000" />
+</dataset>
+</chart>

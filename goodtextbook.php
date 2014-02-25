@@ -9,13 +9,24 @@
 			 
 			$(document).ready(function() {
 			    /* Build the DataTable with third column using our custom sort functions */
-			  var oTable = $('#example').dataTable({
+			 /* var oTable = $('#example').dataTable({
 				"sScrollY": 500,
 				"bScrollCollapse": true,
 				"bPaginate": false
-			});
-			new AutoFill( oTable );
+			}); */
+				
+				$("td.profit").each(function(){
+				if($(this).text()>10)
+				$(this).css("background","green");
+				});
+				/*	
+				$("td.profit").ready(function(){
+				if($(this).text()>10)
+				$(this).css("background","green");
+				});
+				*/
 			} );
+
 		</script>
 		<style type="text/css">
 		table
@@ -36,12 +47,15 @@
 		  background: lightblue;
 		  border-color: white;
 		}
+		.profit{
+
+		}
+		
 		</style>
 	</head>
 	
 	<body>
-		<a href="createReport.php" target="_blank">create new report</a>
-		
+		<!--<a href="createReport.php" target="_blank">create new report</a><br/>-->
 		<table id="example">
 			 <thead>
 
@@ -66,24 +80,24 @@ include('Includes/Connection_inc.php');
 // Use the connectToDB() function provided in DBConn.php, and establish the connection between PHP and the World database in our MySQL setup.
 $link = connectToDB();
 // Form the SQL query which will return the Top 10 Most Populous Countries.
-$strQuery = "select isbn,aprice,avg_aprice,avg_aprice*0.85-aprice-15.35 as profit_a,tnlprice,avg_tnlprice,avg_tnlprice*0.85-tnlprice-15.35 as profit_tnl,tulprice,avg_tulprice,avg_tulprice*0.85-tulprice-15.35 as profit_tul from textbook_good";
+$strQuery = "select isbn,aprice,avg_aprice,avg_aprice*0.85-aprice-5.35 as profit_a,tnlprice,avg_tnlprice,avg_tnlprice*0.85-tnlprice-5.35 as profit_tnl,tulprice,avg_tulprice,avg_tulprice*0.85-tulprice-5.35 as profit_tul from textbook_good";
 // Execute the query, or else return the error message.
 $result = mysql_query($strQuery) or die(mysql_error());
 
 			while(($ors = mysql_fetch_assoc($result))) {
 				$isbn=$ors['isbn'];
 		?>
-				<tr>
-					<td><a href="FusionChartsXT_with_PHP_and_MySQL_using_DataURL.php?isbn=<?php echo $isbn?>"><?php echo $isbn?></a></td>
+				<tr><!--Seris_Chart.php -->
+					<td><a href="Seris_Chart.php?isbn=<?php echo $isbn;?>"><?php echo $isbn?></a></td>
 					<td><?php echo $ors['aprice']?></td>
 					<td><?php echo round($ors['avg_aprice'],2)?></td>
-					<td><?php echo round($ors['profit_a'],2)?></td>
+					<td class="profit"><?php echo round($ors['profit_a'],2)?></td>
 					<td><?php echo $ors['tnlprice']?></td>
 					<td><?php echo round($ors['avg_tnlprice'],2)?></td>
-					<td><?php echo round($ors['profit_tnl'],2)?></td>
+					<td class="profit"><?php echo round($ors['profit_tnl'],2)?></td>
 					<td><?php echo $ors['tulprice']?></td>
 					<td><?php echo round($ors['avg_tulprice'],2)?></td>
-					<td><?php echo round($ors['profit_tul'],2)?></td>
+					<td class="profit"><?php echo round($ors['profit_tul'],2)?></td>
 				</tr>
 		<?php
 		 } ?>

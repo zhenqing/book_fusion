@@ -26,7 +26,7 @@ include('Includes/FusionCharts.php');
 					'Chart_DataProvider.php?isbn='.$_GET['isbn'], // Path to the data provider
 					'', 	// Empty string when using Data URL Method
 					'top10_most_populous_countries', // Undique chart ID
-					'660', '400', // Width and height in pixels
+					'1000', '600', // Width and height in pixels
 					false,	// Disable debug mode
 					true	// Enable 'Register with JavaScript' (Recommended)
 				);
