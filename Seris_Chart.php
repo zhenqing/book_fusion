@@ -27,12 +27,12 @@ include('Includes/FusionCharts.php');
 			$result = mysql_query($strQuery) or die(mysql_error());
 
 			while(($ors = mysql_fetch_assoc($result))) {
-				echo "avg_aprice:".round($ors['avg_aprice'],2)."/t";
-				echo "avg_tnlprice:".round($ors['avg_tnlprice'],2)."/t";
-				echo "avg_tulprice:".round($ors['avg_tulprice'],2)."/t";
+				echo "avg_aprice:".round($ors['avg_aprice'],2)."\t";
+				echo "avg_tnlprice:".round($ors['avg_tnlprice'],2)."\t";
+				echo "avg_tulprice:".round($ors['avg_tulprice'],2)."\t";
 			}
 		?>
-			<a href="http://www.amazon.com/gp/offer-listing/".<?php echo $_GET['isbn']?>/>amazon online</a>
+			<a href="http://www.amazon.com/gp/offer-listing/<?php echo $_GET['isbn']?>"/>amazon online</a>
 
 		<?php
 			// Set the rendering mode to JavaScript

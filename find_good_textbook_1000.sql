@@ -3,6 +3,8 @@ CREATE PROCEDURE inventory.`find_good_textbook_1000`()
     DETERMINISTIC
     COMMENT 'find from 1000 textbooks that produce profit'
 BEGIN  
+DECLARE param_ct int;
+DECLARE param_ct_all int;
 update pricehistory set aprice=null where aprice=1000;
 update pricehistory set tnlprice=null where tnlprice=1000;
 update pricehistory set tulprice=null where tulprice=1000;
@@ -28,18 +30,22 @@ insert into  `textbook_good_tmp` (isbn,tnlprice,avg_tnlprice)
 where p.`isbn`=b.`isbn`
 and b.`avg_tnlprice`*0.85- p.`tnlprice`>15.35 and p.tnlprice>0)
 ;
+select count(1) into param_ct from textbook_good;
+select count(1) into param_ct_all from textbook where salesrank<500000;
+
+if (param_ct>=param_ct_all-10) then
+truncate table textbook_good;
+end if;
+
 insert into  `textbook_good_tmp` (isbn,tulprice,avg_tulprice) 
 (select p.isbn as isbn,p.`tulprice` as tulprice,b.`avg_tulprice` as avg_tulprice from pricenewest p, textbook_avg b
 where p.`isbn`=b.`isbn`
 and b.`avg_tulprice`*0.85- p.`tulprice`>15.35 and p.tulprice>0)
 ;
-truncate table textbook_good;
-insert into textbook_good(isbn) select distinct isbn from textbook_good_tmp;
-update textbook_good t set aprice=(select aprice from pricenewest p where p.isbn=t.isbn);
-update textbook_good t set tnlprice=(select tnlprice from pricenewest p where p.isbn=t.isbn);
-update textbook_good t set tulprice=(select tulprice from pricenewest p where p.isbn=t.isbn);
-update textbook_good t set avg_aprice=(select avg_aprice from textbook_avg p where p.isbn=t.isbn);
-update textbook_good t set avg_tnlprice=(select avg_tnlprice from textbook_avg p where p.isbn=t.isbn);
-update textbook_good t set avg_tulprice=(select avg_tulprice from textbook_avg p where p.isbn=t.isbn);
-truncate table pricenewest;
+
+insert into textbook_good(isbn,aprice,avg_aprice,tnlprice,avg_tnlprice,tulprice,avg_tulprice)
+select isbn,sum(aprice),sum(avg_aprice),sum(tnlprice),sum(avg_tnlprice),sum(tulprice),sum(avg_tulprice)
+from textbook_good_tmp
+group by isbn;
 END;
+
