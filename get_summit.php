@@ -3,7 +3,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery.dataTables.js"></script>
-		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript">
 		    
 			 
@@ -25,6 +25,11 @@
 				$(this).css("background","green");
 				});
 				*/
+				$("select").each(function(){
+					$(this).change(function(){
+						$(this).closest(".record").hide();
+					});
+				});
 			} );
 
 		</script>
@@ -85,7 +90,7 @@ $result = mysql_query($strQuery) or die(mysql_error());
 			while(($ors = mysql_fetch_assoc($result))) {
 				$isbn=$ors['isbn'];
 		?>
-				<tr><!--Seris_Chart.php -->
+				<tr class="record"><!--Seris_Chart.php -->
 					<td><a href="http://www.amazon.com/gp/offer-listing/<?php echo $isbn;?>"><?php echo $isbn?></a></td>
 					<td><?php echo $ors['tulprice']?></td>
 					<td><?php echo round($ors['tulprice2'],2)?></td>
@@ -94,11 +99,13 @@ $result = mysql_query($strQuery) or die(mysql_error());
 					<td><?php echo round($ors['lower'],2)?></td>
 					<td><?php echo $ors['time']?></td>
 					<td>
-						<select name="status">
-							<option value="" selected="selected">unchecked</option>
-							<option value="b" selected="<?php if($ors['flag']=="b") echo "selected" ?>">buyed</option>
-							<option value="c" selected="<?php if($ors['flag']=="c") echo "selected" ?>">canceled</option>
-						</select>
+						<form method="post">
+							<select name="status" >
+								<option value="" selected="selected">unchecked</option>
+								<option value="b" >buyed</option>
+								<option value="c" >canceled</option>
+							</select>
+						</form>
 					</td>
 				</tr>
 		<?php
