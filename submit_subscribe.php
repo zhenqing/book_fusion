@@ -12,7 +12,7 @@ echo $_POST['desired_price'];
 echo $_POST['type'];
 //echo $date;
 // Form the SQL query which will return the Top 10 Most Populous Countries.
-$strQuery = "insert into subscribe(isbn,email,desired_aprice,time,flag) values ('".$_POST['isbn']."','".$_POST['email']."',".$_POST['desired_price'].",'".$date.",'".$_POST['type']."')";
+$strQuery = "insert into subscribe(isbn,email,desired_price,time,flag) values ('".$_POST['isbn']."','".$_POST['email']."',".$_POST['desired_price'].",'".$date."','".$_POST['type']."')";
 echo $strQuery;
 // Execute the query, or else return the error messagestrtotime(echo $strQuery;
 $result = mysql_query($strQuery) or die(mysql_error());

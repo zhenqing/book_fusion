@@ -93,7 +93,13 @@ $result = mysql_query($strQuery) or die(mysql_error());
 					<td class="profit"><?php echo round($ors['profit'],2)?></td>
 					<td><?php echo round($ors['lower'],2)?></td>
 					<td><?php echo $ors['time']?></td>
-					<td><?php if($ors['flag']=='b')  echo "buyed"; elseif ($ors['flag']=='b')  echo "canceled"; ?></td>
+					<td>
+						<select name="status">
+							<option value="" selected="selected">unchecked</option>
+							<option value="b" selected="<?php if($ors['flag']=="b") echo "selected" ?>">buyed</option>
+							<option value="c" selected="<?php if($ors['flag']=="c") echo "selected" ?>">canceled</option>
+						</select>
+					</td>
 				</tr>
 		<?php
 		 } ?>

@@ -38,8 +38,8 @@
 			desired price:<input type="text" name="desired_price"/>
 		    <select name="type">
 		        <option VALUE="a" selected="selected">a</option>
-		    	<option VALUE="tul"> tul</option>
-		    	<option VALUE="tnl"> tnl</option>
+		    	<option VALUE="u"> tul</option>
+		    	<option VALUE="n"> tnl</option>
 		    </select>
 			<input type="submit" name="submit"/><br/>
 		</form>
