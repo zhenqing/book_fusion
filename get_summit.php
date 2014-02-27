@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="js/jquery.dataTables.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript">
-		    
+		  
 			 
 			$(document).ready(function() {
 			    /* Build the DataTable with third column using our custom sort functions */
@@ -27,6 +27,7 @@
 				*/
 				$("select").each(function(){
 					$(this).change(function(){
+						$(this).closest("form").submit();
 						$(this).closest(".record").hide();
 					});
 				});
@@ -99,8 +100,9 @@ $result = mysql_query($strQuery) or die(mysql_error());
 					<td><?php echo round($ors['lower'],2)?></td>
 					<td><?php echo $ors['time']?></td>
 					<td>
-						<form method="post">
-							<select name="status" >
+						<form method="post" action="changeStatus.php" target="_blank">
+							<input type="hidden" name="isbn" value="<?php echo $isbn;?>"/>
+							<select name="status">
 								<option value="" selected="selected">unchecked</option>
 								<option value="b" >buyed</option>
 								<option value="c" >canceled</option>
