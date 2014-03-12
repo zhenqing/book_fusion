@@ -5,7 +5,16 @@
 		<script type="text/javascript" src="js/jquery.dataTables.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript">
-		  
+		  	  function form_success_client(obj) {
+			    $.ajax({
+			       type: "POST",
+			       url: 'changeStatus.php',
+			       success: function(msg){
+			       	//$('#msg').innerHTML=$(obj).closest("input").value();
+			         $('#msg').load("success.php");
+			       }
+			     });
+			}
 			 
 			$(document).ready(function() {
 			    /* Build the DataTable with third column using our custom sort functions */
@@ -56,12 +65,39 @@
 		.profit{
 
 		}
-		
+		#filter div{
+			widtH:;
+		}
 		</style>
 	</head>
 	
 	<body>
+		<div id="msg"></div>
 		<!--<a href="createReport.php" target="_blank">create new report</a><br/>-->
+	<form>
+		<div id="filter">
+	      <div>
+	        <input type="checkbox" name="samsung"/>
+	        <label for="car">samsung</label>
+	      </div>
+	      <div>
+	        <input type="checkbox" name="iphone"/>
+	        <label for="language">iphone</label>
+	      </div>
+	      <div>
+	        <input type="checkbox" name="htc"/>
+	        <label for="nights">htc</label>
+	      </div>
+	      <div>
+	        <input type="checkbox" id="4" name="lg"/>
+	        <label for="student">lg</label>
+	      </div>
+		   <div>
+	        <input type="checkbox" id="5" name="nokia"/>
+	        <label for="student">nokia</label>
+	      </div>
+	    </div>
+	</form>
 		<table id="example">
 			 <thead>
 
@@ -100,7 +136,7 @@ $result = mysql_query($strQuery) or die(mysql_error());
 					<td><?php echo round($ors['lower'],2)?></td>
 					<td><?php echo $ors['time']?></td>
 					<td>
-						<form method="post" action="changeStatus.php" target="_blank">
+						<form method="post" action="changeStatus.php" target="_blank" onsubmit="form_success_client(this); return false;">
 							<input type="hidden" name="isbn" value="<?php echo $isbn;?>"/>
 							<select name="status">
 								<option value="" selected="selected">unchecked</option>
